@@ -3,6 +3,9 @@
 import os
 import gradio as gr
 
+print("✅ gradio_app.py started")
+
+
 from brain_of_the_doctor import encode_image, analyze_image_with_query
 from voice_of_the_patient import transcribe_with_groq
 from voice_of_the_doctor import text_to_speech_with_gtts, text_to_speech_with_elevenlabs
@@ -142,8 +145,13 @@ iface = gr.Interface(
 # RENDER-COMPATIBLE LAUNCH
 # -----------------------------
 if __name__ == "__main__":
-    iface.launch(
-        server_name="0.0.0.0",
-        server_port=int(os.environ.get("PORT", 7860)),
-        debug=True
-    )
+    try:
+        print("🚀 Launching Gradio app...")
+        iface.launch(
+            server_name="0.0.0.0",
+            server_port=int(os.environ.get("PORT", 7860)),
+            debug=True
+        )
+    except Exception as e:
+        print("❌ Gradio failed to start:", e)
+        raise
